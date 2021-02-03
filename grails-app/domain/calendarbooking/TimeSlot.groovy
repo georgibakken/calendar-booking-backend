@@ -2,9 +2,8 @@ package calendarbooking
 
 import java.time.Instant
 
-class Availability {
+class TimeSlot {
 
-    static belongsTo = [photographer: Photographer]
     Instant starts
     Instant ends
 

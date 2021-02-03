@@ -11,6 +11,8 @@ class UrlMappings {
 //        }
 
         get "/api/photographers"(controller: 'photographer')
+        get "/api/photographers/available"(controller: 'photographer', action: 'findAvailablePhotographers')
+
 
 
         "/"(view:"/index")
