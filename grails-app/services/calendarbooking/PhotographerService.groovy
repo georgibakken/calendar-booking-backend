@@ -48,37 +48,31 @@ class PhotographerService {
         // No bookings: Find next timeslot: 08.00 == starts, 09.30 <= ends.
         // booking
 
-        Photographer one = listPhotographers().first()
+        def availablePhotographers = []
+        //check for listPhotographers
+        listPhotographers().each { p ->
+            TimeSlot timeSlot
 
-        TimeSlot timeSlot
+            p.availabilities.find {a->
+                Instant bookingStart = a.starts
+                Instant bookingEnd = calculateBookingEnds(bookingStart, durationInMinutes.toInteger())
 
-        one.availabilities.find {
-            def bookingStart = it.starts
-            def bookingEnd = calculateBookingEnds(bookingStart, durationInMinutes.toInteger())
-
-            if (bookingEnd <= it.ends) {
-                timeSlot = [
-                    starts: bookingStart,
-                    ends: bookingEnd
-                ]
-                return true
+                if (bookingEnd <= a.ends) {
+                    timeSlot = [
+                            starts: bookingStart,
+                            ends: bookingEnd
+                    ]
+                    return true
+                }
+                return false
             }
-            return false
+            log.info("Found timeslot starts: ${timeSlot.starts}")
+            log.info("Found timeslot ends: ${timeSlot.ends}")
+
+            availablePhotographers.add([photographer: [id: p.id, name: p.name], timeSlot: timeSlot])
         }
 
-        log.info("Found timeslot: ${timeSlot}")
-
-        return timeSlot
-
-//        for each availabilities a
-//            bookingStart = a.starts
-//            bookingEnd = bookingStart + 90 minutes (booking.duration)
-//            if (bookingEnd <= a.ends)
-//                nextTimeslot = (starts: bookingStart, ends: bookingEnd)
-//                break
-//            else
-//               // No timeSlot found
-//               // return
+        return availablePhotographers
 
         // Comparing/joining/venn diagraming the availabilites and the bookings
         // Can i SQL query myself out of it?

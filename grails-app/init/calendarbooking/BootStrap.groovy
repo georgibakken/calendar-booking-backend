@@ -1,5 +1,7 @@
 package calendarbooking
 
+import java.time.Instant
+
 class BootStrap {
 
 
@@ -7,14 +9,13 @@ class BootStrap {
 
 //        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
-        def p = new Photographer(name: "Otto Crawford")
-            .addToBookings(new Booking(
-                        durationInMinutes: "60",
-                        starts: "2020-11-25T08:30:00.000Z",
-                        ends: "2020-11-25T09:30:00.000Z"))
-            .addToAvailabilities(new Availability(
-                        starts: "2020-11-25T08:00:00.000Z",
-                        ends: "2020-11-25T16:00:00.000Z"))
+        def p =new Photographer(name: "Otto Crawford")
+                .addToBookings(new Booking(
+                        starts: Instant.parse("2020-11-25T08:30:00Z"),
+                        ends: Instant.parse("2020-11-25T09:30:00Z")))
+                .addToAvailabilities(new Availability(
+                        starts: Instant.parse("2020-11-25T08:00:00Z"),
+                        ends: Instant.parse("2020-11-25T16:00:00Z")))
             .save()
         log.info("Photographer 1: ${p}")
 

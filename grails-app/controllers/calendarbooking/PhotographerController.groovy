@@ -12,11 +12,11 @@ class PhotographerController {
     }
 
     def findAvailablePhotographers() {
-        TimeSlot timeSlots = photographerService.findTimeSlot(1, "90")
+        def photos = photographerService.findTimeSlot(1, "90")
         def responseData = [errors: "Not found"]
 
-        if (timeSlots) {
-            responseData = [timeSlot: timeSlots]
+        if (photos) {
+            responseData = [availablePhotographers: photos]
         }
         render responseData as JSON
     }
