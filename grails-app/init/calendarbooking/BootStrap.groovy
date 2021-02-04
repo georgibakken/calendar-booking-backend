@@ -7,8 +7,6 @@ class BootStrap {
 
     def init = { servletContext ->
 
-//        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
-
         def p =new Photographer(name: "Otto Crawford")
                 .addToBookings(new Booking(
                         starts: Instant.parse("2020-11-25T08:30:00Z"),
@@ -19,7 +17,7 @@ class BootStrap {
             .save()
         log.info("Photographer 1: ${p}")
 
-        def booking = new Booking(durationInMinutes: "120").save()
+        def booking = new Booking(durationInMinutes: "90").save()
         log.info("Booking 1: ${booking}")
 
 

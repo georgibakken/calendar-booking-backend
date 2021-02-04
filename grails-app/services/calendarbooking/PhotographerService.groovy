@@ -53,22 +53,40 @@ class PhotographerService {
         listPhotographers().each { p ->
             TimeSlot timeSlot
 
-            p.availabilities.find {a->
+            p.availabilities.find {a ->
                 Instant bookingStart = a.starts
                 Instant bookingEnd = calculateBookingEnds(bookingStart, durationInMinutes.toInteger())
 
+                // First available slot, not looking at bookings
                 if (bookingEnd <= a.ends) {
-                    timeSlot = [
-                            starts: bookingStart,
-                            ends: bookingEnd
-                    ]
+                    timeSlot = [starts: bookingStart, ends: bookingEnd]
+                }
+
+                // no existing bookings == all good
+                if (p.bookings.isEmpty()) {
+                    return true
+                // existing bookings, what do we do?
+                // loop through the bookings and compare timeslot with existing bookings
+                } else {
+                    p.bookings.each {b ->
+                        if (isTimeSlotAlreadyTaken(timeSlot, b)) {
+                            timeSlot = [starts: b.ends, ends: calculateBookingEnds(b.ends, durationInMinutes.toInteger())]
+                        }
+                    }
+                }
+
+                if(!isTimeSlotWithinAvailability(timeSlot, a)) {
+                    return false
+                } else {
                     return true
                 }
-                return false
             }
+            // if timeslot, check if it overlaps bookings
+            // if it overlaps bookings, check for new availability....
+            // need to loop again here, waste, should be in the availability loop?
             log.info("Found timeslot starts: ${timeSlot.starts}")
             log.info("Found timeslot ends: ${timeSlot.ends}")
-
+            // if timeslot
             availablePhotographers.add([photographer: [id: p.id, name: p.name], timeSlot: timeSlot])
         }
 
@@ -82,5 +100,17 @@ class PhotographerService {
 
     protected Instant calculateBookingEnds(Instant start, Integer duration) {
         start.plus(duration, ChronoUnit.MINUTES)
+    }
+
+    protected Boolean isTimeSlotWithinAvailability(TimeSlot timeSlot, Availability a) {
+        isWithinRange(timeSlot.starts, a.starts, a.ends) || isWithinRange(timeSlot.ends, a.starts, a.ends)
+    }
+
+    protected Boolean isTimeSlotAlreadyTaken(TimeSlot timeSlot, Booking b) {
+        isWithinRange(timeSlot.starts, b.starts, b.ends) || isWithinRange(timeSlot.ends, b.starts, b.ends)
+    }
+
+    protected Boolean isWithinRange(Instant time, Instant start, Instant end) {
+        (time.isAfter(start) || time == start) && (time.isBefore(end) || time == end)
     }
 }
