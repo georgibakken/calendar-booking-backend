@@ -1,9 +1,9 @@
 package calendarbooking
 
-import grails.testing.gorm.DomainUnitTest
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class AvailabilitySpec extends Specification implements DomainUnitTest<Availability> {
+class BookingServiceSpec extends Specification implements ServiceUnitTest<BookingService>{
 
     def setup() {
     }
