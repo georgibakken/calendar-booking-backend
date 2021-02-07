@@ -2,7 +2,6 @@ package calendarbooking
 
 import grails.test.hibernate.HibernateSpec
 import grails.testing.services.ServiceUnitTest
-import spock.lang.Specification
 
 import java.time.Instant
 

@@ -59,7 +59,10 @@ class PhotographerService {
             }
 
             if (timeSlotFound) {
-                availablePhotographers.add([photographer: [id: p.id, name: p.name], timeSlot: timeSlot])
+                availablePhotographers.add(
+                        [photographer: [id: p.id, name: p.name],
+                         timeSlot: [starts: timeSlot.starts.toString(),
+                                    ends: timeSlot.ends.toString()]])
             }
         }
         return availablePhotographers

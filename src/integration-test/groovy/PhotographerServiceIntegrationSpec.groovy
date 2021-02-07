@@ -21,21 +21,21 @@ class PhotographerServiceIntegrationSpec extends Specification {
         Photographer.saveAll(
                 new Photographer(name: "Otto Crawford")
                         .addToBookings(new Booking(
-                                starts: Instant.parse("2020-11-25T08:30:00Z"),
-                                ends: Instant.parse("2020-11-25T09:30:00Z")))
+                                starts: "2020-11-25T08:30:00Z",
+                                ends: "2020-11-25T09:30:00Z"))
                         .addToAvailabilities(new Availability(
-                                starts: Instant.parse("2020-11-25T08:00:00Z"),
-                                ends: Instant.parse("2020-11-25T16:00:00Z"))),
+                                starts: "2020-11-25T08:00:00Z",
+                                ends: "2020-11-25T16:00:00Z")),
                 new Photographer(name: "Jens Mills")
                         .addToBookings(new Booking(
-                                starts: Instant.parse("2020-11-25T15:00:00Z"),
-                                ends: Instant.parse("2020-11-25T16:00:00Z")))
+                                starts: "2020-11-25T15:00:00Z",
+                                ends: "2020-11-25T16:00:00Z"))
                         .addToAvailabilities(new Availability(
-                                starts: Instant.parse("2020-11-25T08:00:00Z"),
-                                ends: Instant.parse("2020-11-25T09:00:00Z")))
+                                starts: "2020-11-25T08:00:00Z",
+                                ends: "2020-11-25T09:00:00Z"))
                         .addToAvailabilities(new Availability(
-                                starts: Instant.parse("2020-11-25T13:00:00Z"),
-                                ends: Instant.parse("2020-11-25T16:00:00Z")))
+                                starts: "2020-11-25T13:00:00Z",
+                                ends: "2020-11-25T16:00:00Z"))
         )
     }
 
@@ -49,11 +49,11 @@ class PhotographerServiceIntegrationSpec extends Specification {
 
         then:
         availablePhotographers[0].photographer.name == "Otto Crawford"
-        availablePhotographers[0].timeSlot.starts == Instant.parse("2020-11-25T09:30:00Z")
-        availablePhotographers[0].timeSlot.ends == Instant.parse("2020-11-25T11:00:00Z")
+        availablePhotographers[0].timeSlot.starts == "2020-11-25T09:30:00Z"
+        availablePhotographers[0].timeSlot.ends == "2020-11-25T11:00:00Z"
         availablePhotographers[1].photographer.name == "Jens Mills"
-        availablePhotographers[1].timeSlot.starts == Instant.parse("2020-11-25T13:00:00Z")
-        availablePhotographers[1].timeSlot.ends == Instant.parse("2020-11-25T14:30:00Z")
+        availablePhotographers[1].timeSlot.starts == "2020-11-25T13:00:00Z"
+        availablePhotographers[1].timeSlot.ends == "2020-11-25T14:30:00Z"
     }
 
     void "no timeslots for non-available date"() {

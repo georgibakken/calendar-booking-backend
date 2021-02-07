@@ -11,8 +11,8 @@ class BookingServiceSpec extends Specification implements ServiceUnitTest<Bookin
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
+//    void "test something"() {
+//        expect:"fix me"
+//            true == false
+//    }
 }
