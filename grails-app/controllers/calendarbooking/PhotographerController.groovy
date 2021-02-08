@@ -14,9 +14,7 @@ class PhotographerController {
         render photographerList as JSON
     }
 
-    //TODO: CORS(?)
     def findAvailablePhotographers() {
-//        def booking = Booking.get(params.bookingId)
         def booking = bookingService.findBooking(params.bookingId)
         def responseData = [errors: "Not found"]
 
@@ -29,6 +27,6 @@ class PhotographerController {
             }
         }
 
-        render responseData as JSON //TODO: need to render timestamp better here, use view?
+        render responseData as JSON
     }
 }

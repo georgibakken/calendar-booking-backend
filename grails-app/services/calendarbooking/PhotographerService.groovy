@@ -15,7 +15,6 @@ class PhotographerService {
 
     def findTimeSlot(LocalDate date, Integer durationInMinutes) {
         def availablePhotographers = []
-        //check for listPhotographers
         listPhotographers().each { p ->
             TimeSlot timeSlot
 

@@ -57,8 +57,5 @@ class PhotographerServiceIntegrationSpec extends Specification {
 
         then:
         availablePhotographers.isEmpty()
-
     }
-
-
 }
