@@ -20,7 +20,7 @@ class PhotographerController {
         def booking = bookingService.findBooking(params.bookingId)
         def responseData = [errors: "Not found"]
 
-        if (booking) {
+        if (booking && booking.durationInMinutes) {
             LocalDate date = LocalDate.parse(params.date)
             def availablePhotographers = photographerService.findTimeSlot(date, booking.durationInMinutes)
 

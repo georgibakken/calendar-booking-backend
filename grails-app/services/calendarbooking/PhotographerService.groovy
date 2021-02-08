@@ -4,7 +4,6 @@ import grails.gorm.transactions.Transactional
 
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 @Transactional
@@ -15,19 +14,17 @@ class PhotographerService {
     }
 
     def findTimeSlot(LocalDate date, Integer durationInMinutes) {
-
-        //TODO  handle that it takes the first slot available slot
-        //query to order the availability based on earliest/smallest start
-
         def availablePhotographers = []
         //check for listPhotographers
         listPhotographers().each { p ->
             TimeSlot timeSlot
 
-//            def sortedAvailabilities = p.availabilities.sort{a, b -> a.starts.isBefore(b.starts)}
+            def sortedAvailabilites = p.availabilities.sort{a, b ->
+                a.starts <=> b.starts
+            }
 
-            Boolean timeSlotFound = p.availabilities.find {a ->
-                if(!isGivenDateAvailable(date, a)) {
+            Boolean timeSlotFound = sortedAvailabilites.find {a ->
+                if (!isGivenDateAvailable(date, a)) {
                     return false
                 }
 
@@ -41,6 +38,7 @@ class PhotographerService {
                 if(!timeSlot) {
                     return false
                 }
+
                 if (p.bookings.isEmpty()) {
                     return true
                 } else {
@@ -77,7 +75,7 @@ class PhotographerService {
     }
 
     protected Boolean isTimeSlotWithinAvailability(TimeSlot timeSlot, Availability a) {
-        isWithinRange(timeSlot.starts, a.starts, a.ends) || isWithinRange(timeSlot.ends, a.starts, a.ends)
+        isWithinRange(timeSlot.starts, a.starts, a.ends) && isWithinRange(timeSlot.ends, a.starts, a.ends)
     }
 
     protected Boolean isTimeSlotAlreadyTaken(TimeSlot timeSlot, Booking b) {

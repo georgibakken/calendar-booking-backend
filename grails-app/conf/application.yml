@@ -3,6 +3,11 @@ grails:
     profile: web
     codegen:
         defaultPackage: calendarbooking
+    cors:
+        enabled: true
+        allowedHeaders: [ Access-Control-Allow-Origin]
+        allowedMethods: [ GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS ]
+        exposedHeaders: [ Content-disposition, Warning ]
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -93,6 +98,8 @@ management:
     endpoints:
         jmx:
             unique-names: true
+server:
+    port: 8090
 
 ---
 hibernate:

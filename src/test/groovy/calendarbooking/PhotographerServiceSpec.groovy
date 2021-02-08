@@ -2,7 +2,6 @@ package calendarbooking
 
 import grails.test.hibernate.HibernateSpec
 import grails.testing.services.ServiceUnitTest
-
 import java.time.Instant
 
 class PhotographerServiceSpec extends HibernateSpec implements ServiceUnitTest<PhotographerService>{
