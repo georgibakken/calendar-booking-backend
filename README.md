@@ -3,7 +3,7 @@
 REST API for calendar booking assignment, using Grails 4.0.6.
 
 ## Prerequisites
-- Java 8 or newer
+- Java 11
 - Gradle
 
 ## Getting started
